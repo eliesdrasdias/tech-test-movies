@@ -2,8 +2,8 @@ package services
 
 import (
 	"context"
-	"tech-test-movies/movie-service/internal/core/domain"
-	"tech-test-movies/movie-service/internal/core/ports"
+	"movie-service/internal/core/domain"
+	"movie-service/internal/core/ports"
 )
 
 // movieService implementa a interface MovieService

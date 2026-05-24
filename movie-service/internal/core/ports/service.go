@@ -2,7 +2,7 @@ package ports
 
 import (
 	"context"
-	"tech-test-movies/movie-service/internal/core/domain"
+	"movie-service/internal/core/domain"
 )
 
 type MovieService interface {

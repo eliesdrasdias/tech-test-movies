@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"tech-test-movies/movie-service/internal/core/domain"
+	"movie-service/internal/core/domain"
 )
 
 type mockMovieRepository struct{}

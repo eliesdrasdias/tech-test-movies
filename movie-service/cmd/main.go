@@ -14,11 +14,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
 
-	"tech-test-movies/movie-service/internal/adapters/db"
-	grpcAdapter "tech-test-movies/movie-service/internal/adapters/grpc"
-	"tech-test-movies/movie-service/internal/core/domain"
-	"tech-test-movies/movie-service/internal/core/services"
-	"tech-test-movies/pb"
+	"movie-service/internal/adapters/db"
+	grpcAdapter "movie-service/internal/adapters/grpc"
+	"movie-service/internal/core/domain"
+	"movie-service/internal/core/services"
+	"pb"
 )
 
 func main() {

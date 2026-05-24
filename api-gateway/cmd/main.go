@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"tech-test-movies/api-gateway/docs"
-	"tech-test-movies/api-gateway/internal/handler"
-	"tech-test-movies/pb"
+	"api-gateway/docs"
+	"api-gateway/internal/handler"
+	"pb"
 )
 
 // @title API de Gerenciamento de Filmes

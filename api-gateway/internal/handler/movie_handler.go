@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"tech-test-movies/pb"
+	"pb"
 
 	"github.com/gin-gonic/gin"
 )

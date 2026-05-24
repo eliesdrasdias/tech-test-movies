@@ -3,9 +3,9 @@ package grpc
 import (
 	"context"
 
-	"tech-test-movies/movie-service/internal/core/domain"
-	"tech-test-movies/movie-service/internal/core/ports"
-	"tech-test-movies/pb"
+	"movie-service/internal/core/domain"
+	"movie-service/internal/core/ports"
+	"pb"
 )
 
 // grpcServer implementa a interface MovieService

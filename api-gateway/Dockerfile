@@ -1,24 +1,25 @@
-# Estágio 1: Compila o binário
-FROM golang:latest AS builder
+FROM golang:1.26.2-alpine AS builder
+
+RUN apk add --no-cache git gcc musl-dev
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
-RUN go mod download
-
+# Copia o monorepo completo para garantir o escopo do go.work e pacotes locais
 COPY . .
 
-# Compila o binário do API Gateway
-RUN go build -o api-gateway-bin ./api-gateway/cmd/main.go
+WORKDIR /app/api-gateway
 
-# Estágio 2: Imagem final (Pequena e leve)
-FROM debian:bookworm-slim
+RUN go mod download
+RUN CGO_ENABLED=1 GOOS=linux go build -ldflags="-s -w" -o /app/api-gateway-bin ./cmd/main.go
+
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
 
 WORKDIR /app
 
 COPY --from=builder /app/api-gateway-bin .
 
-# Expo
 EXPOSE 8080
 
-CMD ["./api-gateway-bin"]
+ENTRYPOINT ["./api-gateway-bin"]

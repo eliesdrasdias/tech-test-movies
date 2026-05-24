@@ -8,8 +8,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"tech-test-movies/movie-service/internal/core/domain"
-	"tech-test-movies/movie-service/internal/core/ports"
+	"movie-service/internal/core/domain"
+	"movie-service/internal/core/ports"
 )
 
 // mongoRepository implementa a interface MovieRepository

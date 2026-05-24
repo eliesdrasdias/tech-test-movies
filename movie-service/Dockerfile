@@ -1,31 +1,26 @@
-# Estágio 1: Compilar o binário
-FROM golang:latest AS builder
+FROM golang:1.26.2-alpine AS builder
+
+RUN apk add --no-cache git gcc musl-dev
 
 WORKDIR /app
 
-# Copia o go.mod e go.sum para dentro do container
-COPY go.mod go.sum ./
-RUN go mod download
-
-# Copia o restante da aplicação
+# Copia o monorepo completo para garantir o escopo do go.work e pacotes locais
 COPY . .
 
-# Compila o binário
-RUN go build -o movie-service-bin ./movie-service/cmd/main.go
+WORKDIR /app/movie-service
 
-# Estágio 2: Rodar a aplicação
-FROM debian:bookworm-slim
+RUN go mod download
+RUN CGO_ENABLED=1 GOOS=linux go build -ldflags="-s -w" -o /app/movie-service-bin ./cmd/main.go
+
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
 
 WORKDIR /app
 
-# Copia o binário
 COPY --from=builder /app/movie-service-bin .
+COPY --from=builder /app/data/ ./data
 
-# Copia os arquivos de configuração
-COPY --from=builder /app/data ./data
-
-# Expo
 EXPOSE 50051
 
-# Roda a aplicação
-CMD ["./movie-service-bin"]
+ENTRYPOINT ["./movie-service-bin"]
