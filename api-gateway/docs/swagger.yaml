@@ -1,0 +1,99 @@
+basePath: /
+definitions:
+  pb.CreateMovieRequest:
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      year:
+        type: string
+    type: object
+  pb.Movie:
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      year:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API para gerenciamento de filmes
+  title: API de Gerenciamento de Filmes
+  version: "1.0"
+paths:
+  /movies/:
+    get:
+      description: Retorna uma lista de todos os filmes disponíveis no banco de dados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/pb.Movie'
+            type: array
+      summary: Lista todos os filmes
+      tags:
+      - movies
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo filme no banco de dados
+      parameters:
+      - description: Dados do Filme
+        in: body
+        name: movie
+        required: true
+        schema:
+          $ref: '#/definitions/pb.CreateMovieRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/pb.Movie'
+      summary: Cria um novo filme
+      tags:
+      - movies
+  /movies/{id}:
+    delete:
+      description: Remove um filme do banco de dados usando seu ID
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Remove um filme
+      tags:
+      - movies
+    get:
+      description: Retorna os detalhes de um filme específico usando seu ID
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb.Movie'
+      summary: Busca um filme pelo ID
+      tags:
+      - movies
+swagger: "2.0"

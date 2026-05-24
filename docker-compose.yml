@@ -1,0 +1,40 @@
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: movies-mongodb
+    privileged: true # Dá permissão total ao container
+    user: root       # Executa como superusuário
+    command: --bind_ip_all
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+
+  movie-service:
+    build:
+      context: .
+      dockerfile: movie-service/Dockerfile
+    container_name: movies-backend
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    container_name: movies-api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - GRPC_MOVIE_SERVICE_TARGET=movie-service:50051
+    depends_on:
+      - movie-service
+
+volumes:
+  mongo_data:
