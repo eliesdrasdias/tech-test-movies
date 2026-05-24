@@ -1,0 +1,13 @@
+.env
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+__debug_bin
+bin/
+data/db/
+data/diagnostic.data/
+data/journal/
+.DS_Store
+Thumbs.db
